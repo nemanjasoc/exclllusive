@@ -1,0 +1,80 @@
+<template>
+    <header>
+        <div class="header-container">
+            <a class="go-back" title="Home" href="/">
+                <span></span>
+            </a>
+            
+           <button class="hamburger hamburger--slider" type="button" 
+                @click="isNavOpen()"
+                :class="{ 'is-active': toggleClassIsActive }">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </button>
+        </div>
+    </header>
+</template>
+
+<script>
+import { eventBus } from '../../main';
+
+export default {
+    data() {
+        return {
+            toggleClassIsActive: false
+        }
+    },
+    methods: {
+        isNavOpen() {
+            this.toggleClassIsActive = !this.toggleClassIsActive;
+            let isOpen = this.toggleClassIsActive;
+            eventBus.$emit('navCheck', isOpen);
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+header {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    padding: 20px 0;
+    pointer-events: none;
+}
+
+.header-container {
+    display: flex;
+    padding: 0 10px;
+}
+
+.hamburger {
+    margin-left: auto;
+    pointer-events: auto;
+    padding: 10px 10px;
+    outline: none;
+}
+
+.hamburger.is-active .hamburger-inner {
+    background-color: gray;
+
+    &::before,
+    &::after {
+        background-color: gray;
+    }
+}
+
+.hamburger-inner {
+    background-color: gray;
+    height: 1px;
+
+    &::before,
+    &::after {
+        background-color: gray;
+        height: 1px;
+    }
+}
+</style>
