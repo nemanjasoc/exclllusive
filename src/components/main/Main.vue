@@ -1,24 +1,49 @@
 <template>
     <main>
         <section class="section-hazelnut-field">
-            <div class="hazelnut-field-main-title" :class="{ 'show-hazelnut': showHazelnut }">
+            <div class="hazelnut-field-main-title" :class="{ 'show': showHazelnut }">
                 <h1>Hazelnut</h1>
             </div>
         </section>
 
         <section class="section-hazelnut">
+            <button type="button" class="products-button" v-if="!isNavOpen" @click="productsNavIsActive = !productsNavIsActive">
+                <span>+</span>
+            </button>
+            <nav class="nav-products" :class="{ 'show-nav-products': productsNavIsActive }">
+                <ul>
+                    <li>
+                        <span>Oil</span>
+                    </li>
+                    <li>
+                        <span>Butter</span>
+                    </li>
+                    <li>
+                        <span>Butter with chocolate</span>
+                    </li>
+                    <li>
+                        <span>Flour</span>
+                    </li>
+                    <li>
+                        <span>Gift box small</span>
+                    </li>
+                    <li>
+                        <span>Gift box big</span>
+                    </li>
+                </ul>
+            </nav>
             <div class="hazelnut-container">
-                <div class="vertical-hazelnut-title">
+                <div class="vertical-hazelnut-title" :class="{ 'show': !showHazelnut }">
                     <h2>Hazelnut</h2>
                 </div>     
-                <img class="hazelnut-img" src="src/assets/images/hazelnut.png">
-                <div class="text-one">
+                <img class="hazelnut-img" src="src/assets/images/hazelnut.png" :class="{ 'show': !showHazelnut }">
+                <div class="text-one" :class="{ 'show': !showHazelnut }">
                     <h3>Hazelnut</h3>
                     <p>The Hazelnut is the nut of the hazel tree which is also called filberts. 
                     Hazelnuts contain the highest level of vitamin E, 
                     which plays an essential role in preserving healthy nails.</p>
                 </div>
-                <div class="text-two">
+                <div class="text-two" :class="{ 'show': !showHazelnut }">
                     <h3>Hazelnut</h3>
                     <p>Hazelnuts are full of unsaturated fats, calcium, magnesium, and vitamin B. 
                     Therefore, they support good heart health, may decrease the risk of cancer, 
@@ -36,12 +61,11 @@ export default {
     data() {
         return {
             isNavOpen: false,
-            showHazelnut: true
+            showHazelnut: true,
+            productsNavIsActive: false
         }
     },
     created() {
-        var elementsToShow = document.querySelectorAll('.hazelnut-field');
-
         window.addEventListener('scroll', () => {
             var h = document.documentElement, 
                 b = document.body,
@@ -57,7 +81,6 @@ export default {
                 this.showHazelnut = false;
             }
 
-            console.log(this.showHazelnut);
         });
 
         eventBus.$on('navCheck', (isOpen) => {
@@ -68,6 +91,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'src/scss/mixins';
+
 .section-hazelnut-field {
     background-image: url("../../assets/images/3_BG.jpg");
     height: 100vh;
@@ -83,33 +108,9 @@ export default {
 
 .hazelnut-field-main-title {
     display: none;
-    animation: 1s ease .5s normal forwards 1 showhazelnut;
-    -webkit-animation: 1s ease .5s normal forwards 1 showhazelnut;
-    opacity: 0;
+    @include show-hazelnut-animation;
 
-    @keyframes showhazelnut {
-        from {
-            opacity: 0;
-            -webkit-transform: scale(1.2);
-        }
-        to {
-            opacity: 1;
-            -webkit-transform: scale(1.0);
-        }
-    }
-
-    @-webkit-keyframes showhazelnut {
-        from {
-            opacity: 0;
-            -webkit-transform: scale(1.2);
-        }
-        to {
-            opacity: 1;
-            -webkit-transform: scale(1.0);
-        }
-    }
-
-    &.show-hazelnut {
+    &.show {
         display: block;
     }
 
@@ -130,22 +131,87 @@ export default {
     justify-content: center;
 }
 
-.vertical-hazelnut-title {
+.nav-products {
+    opacity: 0;
+    height: 100vh;
+    width: 100vw;
     position: absolute;
-    left: -330px;
-    max-width: 1140px;
-    color: #f2f2f2;
-    z-index: -1;
-    transform: rotate(-90deg);
-    -webkit-transform: rotate(-90deg);
-    -moz-transform: rotate(-90deg);
-    -ms-transform: rotate(-90deg);
-    -o-transform: rotate(-90deg);
-    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    color: #999;
+    z-index: 30;
 
-    h2 {
-        font-size: 17vh;
+    &.show-nav-products {
+        opacity: 0.85;
+        visibility: visible;
+        background-color: black;
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            padding: 15px 0;
+            text-align: center;
+            cursor: pointer;
+
+            span {
+                position: relative;
+                text-transform: uppercase;
+                font-size: 17px;
+                -webkit-transition: letter-spacing .2s;
+                transition: letter-spacing .2s;
+
+                &:hover {
+                    letter-spacing: 4px;
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: 8px;
+                        left: -25px;
+                        width: 15px;
+                        height: 1px;
+                        border-bottom: 1px solid #999;
+                    }
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        top: 8px;
+                        right: -25px;
+                        width: 15px;
+                        height: 1px;
+                        border-bottom: 1px solid #999;
+                    }
+                }
+            }
+        }
     }
+}
+
+.products-button {
+    position: absolute;
+    left: 40px;
+    top: 70px;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background-color: #000;
+    color: #fff;
+    font-size: 56px;
+    font-weight: 300;
+    z-index: 40;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: none;
+    cursor: pointer;
 }
 
 .hazelnut-container {
@@ -157,103 +223,142 @@ export default {
     align-items: center;
 }
 
-.hazelnut-img {
-    max-width: 60%;
-    height: auto;
-}
+.vertical-hazelnut-title {
+    display: none;
+    @include show-hazelnut-animation;
 
-.text-one,
-.text-two {
-    color: #4d4d4d;
-    margin: 0 30px;
-    text-align: center;
+    &.show {
+        display: block;
+        position: absolute;
+        left: -170px;
+        max-width: 1140px;
+        z-index: -1;
+    }
 
-    h3 {
-        position: relative;
-        position: relative;
-        font-weight: 300;
-        color: #999;
-        font-size: 30px;
-        margin-top: 0;
-        margin-bottom: 0;
+    h2 {
+        font-size: 17vh;
+        color: #f2f2f2;
+        transform: rotate(-90deg);
+        -webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
     }
 }
 
-p {
-    font-weight: 300;
-    line-height: 1.5;
-    font-size: 15px;
+
+.hazelnut-img {
+    display: none;
+    @include show-hazelnut-animation;
+
+    &.show {
+        display: block;
+        max-width: 60%;
+        height: auto;
+    }
+}
+
+.text-one {
+    display: none;
+    @include show-text1-animation-small-screen;
+
+    &.show {
+        @include texts;
+    }
+}
+
+.text-two {
+    display: none;
+    @include show-text2-animation-small-screen;
+
+    &.show {
+        @include texts;
+    }
 }
 
 @media only screen and (min-width: 768px) {
     .text-one {
-        position: absolute;
-        top: -26%;
-        right: 0;
-        max-width: 290px;
-        text-align: left;
+        display: none;
+        @include show-text1-animation;
 
-        h3 {
-            &::before {
-                content: "";
-                position: absolute;
-                display: block;
-                border: 1px solid rgba(143, 148, 0, 0.4);
-                width: 50px;
-                height: 154px;
-                border-right: none;
-                border-bottom: none;
-                left: -56px;
-                top: 18px;
-            }
+        &.show {
+            display: block;
+            position: absolute;
+            top: -26%;
+            right: 0;
+            max-width: 290px;
+            text-align: left;
 
-            &::after {
-                content: "";
-                position: absolute;
-                display: block;
-                border: 1px solid rgba(143,148,0,0.4);
-                border-radius: 50%;
-                width: 57px;
-                height: 57px;
-                left: -85px;
-                top: 142px;
+            h3 {
+                &::before {
+                    content: "";
+                    position: absolute;
+                    display: block;
+                    border: 1px solid rgba(143, 148, 0, 0.4);
+                    width: 50px;
+                    height: 154px;
+                    border-right: none;
+                    border-bottom: none;
+                    left: -56px;
+                    top: 18px;
+                }
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    display: block;
+                    border: 1px solid rgba(143,148,0,0.4);
+                    border-radius: 50%;
+                    width: 57px;
+                    height: 57px;
+                    left: -85px;
+                    top: 142px;
+                }
             }
         }
+
     }
 
     .text-two {
-        position: absolute;
-        max-width: 290px;
-        left: 0;
-        top: 86%;
-        text-align: right;
+        display: none;
+        @include show-text2-animation;
 
-        h3 {
-            &::before {
-                content: "";
-                position: absolute;
-                display: block;
-                border: 1px solid rgba(143,148,0,0.4);
-                width: 46px;
-                height: 55px;
-                border-left: none;
-                border-top: none;
-                right: -56px;
-                bottom: 15px;
-            }
+        &.show {
+            display: block;
+            position: absolute;
+            max-width: 290px;
+            left: 0;
+            top: 73%;
+            text-align: right;
 
-            &::after {
-                content: "";
-                position: absolute;
-                display: block;
-                border: 1px solid rgba(143,148,0,0.4);
-                right: -85px;
-                bottom: 43px;
-                border-radius: 50%;
-                width: 57px;
-                height: 57px;
+            h3 {
+                &::before {
+                    content: "";
+                    position: absolute;
+                    display: block;
+                    border: 1px solid rgba(143,148,0,0.4);
+                    width: 46px;
+                    height: 55px;
+                    border-left: none;
+                    border-top: none;
+                    right: -56px;
+                    bottom: 15px;
+                }
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    display: block;
+                    border: 1px solid rgba(143,148,0,0.4);
+                    right: -85px;
+                    bottom: 43px;
+                    border-radius: 50%;
+                    width: 57px;
+                    height: 57px;
+                }
             }
         }
+
     }
 }
 </style>

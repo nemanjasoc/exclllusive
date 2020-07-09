@@ -1,10 +1,6 @@
 <template>
     <header>
         <div class="header-container">
-            <a class="go-back" title="Home" href="/">
-                <span></span>
-            </a>
-            
            <button class="hamburger hamburger--slider" type="button" 
                 @click="isNavOpen()"
                 :class="{ 'is-active': toggleClassIsActive }">
