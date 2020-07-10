@@ -107,6 +107,7 @@ ul {
 
 .menu-products {
     margin-top: 90px;
+    width: 330px;
 }
 
 .expand-button {
@@ -125,10 +126,12 @@ ul {
 }
 
 .hazelnut-menu {
-    display: none;
+    height: 0px;
+
+    @include transition(height .2s);
 
     &.active {
-        display: block;
+        height: 372px;
 
         ul {
             text-align: center;
@@ -141,26 +144,31 @@ ul {
                     font-size: 28px;
                     color: #fff;
                     cursor: pointer;
+                    padding: 0 5px;
+
+                    &::before,
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        top: 15px;
+                        width: 0;
+                        height: 1px;
+                        border-bottom: 1px solid rgba(143,148,0,0.75);
+                        @include transition(width .2s);
+                    }
+
+                    &::before {
+                        right: 100%;
+                    }
+
+                    &::after {
+                        left: 100%;
+                    }
 
                     &:hover {
-                        &::before {
-                            content: "";
-                            position: absolute;
-                            top: 15px;
-                            left: -25px;
-                            width: 18px;
-                            height: 1px;
-                            border-bottom: 1px solid rgba(143,148,0,0.75);
-                        }
-
+                        &::before,
                         &::after {
-                            content: "";
-                            position: absolute;
-                            top: 15px;
-                            right: -25px;
                             width: 18px;
-                            height: 1px;
-                            border-bottom: 1px solid rgba(143,148,0,0.75);
                         }
                     }
                 }
@@ -309,6 +317,9 @@ ul {
                     position: relative;
                     cursor: pointer;
                     padding: 12px 0;
+                    left: 0px;
+                    padding-left: 0px;
+                    @include transition(all 0.2s ease);
 
                     span {         
                         font-size: 28px;
@@ -320,17 +331,23 @@ ul {
                         }
                     }
 
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        top: 26px;
+                        right: 100%;
+                        width: 0px;
+                        height: 1px;
+                        border-bottom: 1px solid rgba(143, 148, 0, 0.75);
+                        @include transition(width 0.2s ease);
+                    }
+
                     &:hover {
-                        margin-left: 40px;
+                        left: 25px;
+                        padding-left: 5px;
 
                         &::before {
-                            content: "";
-                            position: absolute;
-                            top: 26px;
-                            left: -40px;
                             width: 25px;
-                            height: 1px;
-                            border-bottom: 1px solid rgba(143, 148, 0, 0.75);
                         }
                     }
                 }

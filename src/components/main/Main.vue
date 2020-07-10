@@ -173,40 +173,46 @@ export default {
             list-style-type: none;
             margin: 0;
             padding: 0;
+            text-align: center;
         }
 
         li {
-            padding: 15px 0;
-            text-align: center;
-            cursor: pointer;
-
+            padding: 12px 0;
+            
             span {
                 position: relative;
                 text-transform: uppercase;
                 font-size: 17px;
+                padding: 0 8px;
+                color: $base-color;
+                cursor: pointer;
                 @include transition(letter-spacing .2s);
+
+                &::before,
+                &::after {
+                    content: "";
+                    position: absolute;
+                    top: 8px;
+                    width: 0;
+                    height: 1px;
+                    border-bottom: 1px solid $base-color;
+                    @include transition(width .2s);
+                }
+
+                &::before {
+                    right: 100%;
+                }
+
+                &::after {
+                    left: 100%;
+                }
 
                 &:hover {
                     letter-spacing: 4px;
 
-                    &::before {
-                        content: "";
-                        position: absolute;
-                        top: 8px;
-                        left: -25px;
-                        width: 15px;
-                        height: 1px;
-                        border-bottom: 1px solid $base-color;
-                    }
-
+                    &::before,
                     &::after {
-                        content: "";
-                        position: absolute;
-                        top: 8px;
-                        right: -25px;
-                        width: 15px;
-                        height: 1px;
-                        border-bottom: 1px solid $base-color;
+                        width: 20px;
                     }
                 }
             }
