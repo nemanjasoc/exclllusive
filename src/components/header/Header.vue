@@ -32,6 +32,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import 'src/scss/variables';
+
 header {
     position: fixed;
     left: 0;
@@ -39,7 +41,6 @@ header {
     width: 100%;
     z-index: 100;
     padding: 20px 0;
-    pointer-events: none;
 }
 
 .header-container {
@@ -55,21 +56,21 @@ header {
 }
 
 .hamburger.is-active .hamburger-inner {
-    background-color: gray;
+    background-color: $base-color;
 
     &::before,
     &::after {
-        background-color: gray;
+        background-color: $base-color;
     }
 }
 
 .hamburger-inner {
-    background-color: gray;
+    background-color: $base-color;
     height: 1px;
 
     &::before,
     &::after {
-        background-color: gray;
+        background-color: $base-color;
         height: 1px;
     }
 }

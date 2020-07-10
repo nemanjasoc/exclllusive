@@ -1,9 +1,11 @@
+@import 'src/scss/variables';
+
 @mixin show-hazelnut-animation {
-    animation: showhazelnut 1s ease .5s forwards;
-    -webkit-animation: showhazelnut 1s ease .5s forwards;
+    animation: show-hazelnut 1s ease .3s forwards;
+    -webkit-animation: show-hazelnut 1s ease .3s forwards;
     opacity: 0;
 
-    @keyframes showhazelnut {
+    @keyframes show-hazelnut {
         from {
             opacity: 0;
             -webkit-transform: scale(1.2);
@@ -14,7 +16,7 @@
         }
     }
 
-    @-webkit-keyframes showhazelnut {
+    @-webkit-keyframes show-hazelnut {
         from {
             opacity: 0;
             -webkit-transform: scale(1.2);
@@ -27,11 +29,11 @@
 }
 
 @mixin show-main-nav-animation {
-    animation: show 0.5s ease 0s forwards;
-    -webkit-animation: show 0.5s ease 0s forwards;
+    animation: show-main-nav 0.5s ease 0s forwards;
+    -webkit-animation: show-main-nav 0.5s ease 0s forwards;
     opacity: 0;
 
-    @keyframes show {
+    @keyframes show-main-nav {
         from {
             opacity: 0;
             -webkit-transform: scale(1.2);
@@ -42,7 +44,7 @@
         }
     }
 
-    @-webkit-keyframes show {
+    @-webkit-keyframes show-main-nav {
         from {
             opacity: 0;
             -webkit-transform: scale(1.2);
@@ -111,11 +113,11 @@
 }
 
 @mixin show-text1-animation-small-screen {
-    animation: show-text1 1s ease 1s forwards;
-    -webkit-animation: show-text1 1s ease 1s forwards;
+    animation: show-text1-small-screen 1s ease 1s forwards;
+    -webkit-animation: show-text1-small-screen 1s ease 1s forwards;
     opacity: 0;
 
-    @keyframes show-text1 {
+    @keyframes show-text1-small-screen {
         from {
             opacity: 0;
             -webkit-transform: translateY(50px);
@@ -126,7 +128,7 @@
         }
     }
 
-    @-webkit-keyframes show-text1 {
+    @-webkit-keyframes show-text1-small-screen {
         from {
             opacity: 0;
             -webkit-transform: translateY(50px);
@@ -139,11 +141,11 @@
 }
 
 @mixin show-text2-animation-small-screen {
-    animation: show-text1 1s ease 1.5s forwards;
-    -webkit-animation: show-text1 1s ease 1.5s forwards;
+    animation: show-text1-small-screen 1s ease 1.5s forwards;
+    -webkit-animation: show-text1-small-screen 1s ease 1.5s forwards;
     opacity: 0;
 
-    @keyframes show-text1 {
+    @keyframes show-text1-small-screen {
         from {
             opacity: 0;
             -webkit-transform: translateY(50px);
@@ -154,7 +156,7 @@
         }
     }
 
-    @-webkit-keyframes show-text1 {
+    @-webkit-keyframes show-text1-small-screen {
         from {
             opacity: 0;
             -webkit-transform: translateY(50px);
@@ -175,7 +177,7 @@
     h3 {
         position: relative;
         font-weight: 300;
-        color: #999;
+        color: $base-color;
         font-size: 30px;
         margin-top: 0;
         margin-bottom: 0;
@@ -186,4 +188,19 @@
         line-height: 1.5;
         font-size: 15px;
     }
+}
+
+@mixin transition($args...) {
+    -webkit-transition: $args;
+    -moz-transition: $args;
+    -o-transition: $args;
+    transition: $args;
+}
+
+@mixin transform($degrees) {
+    -webkit-transform: rotate($degrees);
+    -moz-transform: rotate($degrees);
+    -ms-transform: rotate($degrees);
+    -o-transform: rotate($degrees);
+    transform: rotate($degrees);
 }

@@ -7,10 +7,10 @@
         </section>
 
         <section class="section-hazelnut">
-            <button type="button" class="products-button" v-if="!isNavOpen" @click="productsNavIsActive = !productsNavIsActive">
+            <button type="button" class="products-button" v-if="!isNavOpen" @click="navProductsIsActive = !navProductsIsActive">
                 <span>+</span>
             </button>
-            <nav class="nav-products" :class="{ 'show-nav-products': productsNavIsActive }">
+            <nav class="nav-products" :class="{ 'show-nav-products': navProductsIsActive }">
                 <ul>
                     <li>
                         <span>Oil</span>
@@ -36,7 +36,7 @@
                 <div class="vertical-hazelnut-title" :class="{ 'show': !showHazelnut }">
                     <h2>Hazelnut</h2>
                 </div>     
-                <img class="hazelnut-img" src="src/assets/images/hazelnut.png" :class="{ 'show': !showHazelnut }">
+                <img class="hazelnut-img" src="../../assets/images/hazelnut.png" :class="{ 'show': !showHazelnut }">
                 <div class="text-one" :class="{ 'show': !showHazelnut }">
                     <h3>Hazelnut</h3>
                     <p>The Hazelnut is the nut of the hazel tree which is also called filberts. 
@@ -62,16 +62,16 @@ export default {
         return {
             isNavOpen: false,
             showHazelnut: true,
-            productsNavIsActive: false
+            navProductsIsActive: false
         }
     },
     created() {
         window.addEventListener('scroll', () => {
-            var h = document.documentElement, 
+            let h = document.documentElement, 
                 b = document.body,
                 st = 'scrollTop',
                 sh = 'scrollHeight';
-            var scrollPercent = (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
+            let scrollPercent = (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
 
             if (scrollPercent == 0) {
                 this.showHazelnut = true;
@@ -92,12 +92,13 @@ export default {
 
 <style lang="scss" scoped>
 @import 'src/scss/mixins';
+@import 'src/scss/variables';
 
 .section-hazelnut-field {
     background-image: url("../../assets/images/3_BG.jpg");
     height: 100vh;
     background-size: cover;
-    background-position: 84% center;
+    background-position: center;
     background-repeat: no-repeat;
     display: flex;
     align-items: center;
@@ -131,6 +132,26 @@ export default {
     justify-content: center;
 }
 
+.products-button {
+    position: absolute;
+    left: 40px;
+    top: 70px;
+    width: 65px;
+    height: 65px;
+    border-radius: 50%;
+    background-color: #000;
+    color: #fff;
+    font-size: 56px;
+    font-weight: 300;
+    z-index: 40;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
 .nav-products {
     opacity: 0;
     height: 100vh;
@@ -140,7 +161,7 @@ export default {
     justify-content: center;
     align-items: center;
     visibility: hidden;
-    color: #999;
+    color: $base-color;
     z-index: 30;
 
     &.show-nav-products {
@@ -163,8 +184,7 @@ export default {
                 position: relative;
                 text-transform: uppercase;
                 font-size: 17px;
-                -webkit-transition: letter-spacing .2s;
-                transition: letter-spacing .2s;
+                @include transition(letter-spacing .2s);
 
                 &:hover {
                     letter-spacing: 4px;
@@ -176,7 +196,7 @@ export default {
                         left: -25px;
                         width: 15px;
                         height: 1px;
-                        border-bottom: 1px solid #999;
+                        border-bottom: 1px solid $base-color;
                     }
 
                     &::after {
@@ -186,32 +206,12 @@ export default {
                         right: -25px;
                         width: 15px;
                         height: 1px;
-                        border-bottom: 1px solid #999;
+                        border-bottom: 1px solid $base-color;
                     }
                 }
             }
         }
     }
-}
-
-.products-button {
-    position: absolute;
-    left: 40px;
-    top: 70px;
-    width: 65px;
-    height: 65px;
-    border-radius: 50%;
-    background-color: #000;
-    color: #fff;
-    font-size: 56px;
-    font-weight: 300;
-    z-index: 40;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    outline: none;
-    cursor: pointer;
 }
 
 .hazelnut-container {
@@ -238,11 +238,7 @@ export default {
     h2 {
         font-size: 17vh;
         color: #f2f2f2;
-        transform: rotate(-90deg);
-        -webkit-transform: rotate(-90deg);
-        -moz-transform: rotate(-90deg);
-        -ms-transform: rotate(-90deg);
-        -o-transform: rotate(-90deg);
+        @include transform(-90deg);
     }
 }
 
